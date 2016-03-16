@@ -1,0 +1,175 @@
+<!--
+   
+    Krit Karan 
+    
+    IIIT Sri City
+
+
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">   
+   <style type="text/css">
+
+h1
+{
+  padding-left: 85px;
+}
+body 
+{
+  padding-top: 50px;
+  padding-bottom : 40px;
+}
+
+
+.sub-header {
+  padding-bottom: 10px;
+}
+
+form
+{
+   border: solid;
+   padding-left: 20px;
+   padding-top: 10px;
+   height: 400px;
+}
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+   </style>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+
+  </head>
+
+  <body>
+
+    <h1 align="centre"> Please tick which operation you want to perform on the image </h1>
+    <br> <br>
+    
+    <div class="container">
+
+    <form action="." method="post" enctype="multipart/form-data">
+       
+
+       <label for="id_docfile">Upload the image:
+       <input id="id_docfile" type="file" name="docfile"></input>
+       </label>
+       <br>
+       <label for="id_greyscale">Perform Greyscale operation:</label>
+       <input id="id_greyscale" type="checkbox" name="greyscale"></input>
+       <br>
+       <label for="id_smoothen">Smoothen the image :</label>
+       <input id="id_smoothen" type="checkbox" name="smoothen"></input>
+       <br>
+        <label for="id_binarythreshold">Binary threshold Operation:</label>
+       <input id="id_binarythreshold" type="checkbox" name="binarythreshold"></input>
+       <br>
+       <label for="id_resize">Resize:</label>
+       <input id="id_resize" type="checkbox" name="resize"></input>
+       <br>
+       <label for="id_histogram">Histogram:</label>
+       <input id="id_histogram" type="checkbox" name="histogram"></input>
+       <br>
+       <label for="id_edgedetection">Edgedetection:</label>
+       <input id="id_edgedetection" type="checkbox" name="edgedetection"></input>
+       <br>
+       <label for="id_sobelfilter">Sobelfilter:</label>
+       <input id="id_sobelfilter" type="checkbox" name="sobelfilter"></input>
+       <br>
+       <label for="id_foregroundextract">Foreground extract:</label>
+       <input id="id_foregroundextract" type="checkbox" name="foregroundextract"></input>
+       <br>
+
+       <br>     
+       <input type="button" value="View the image" onclick="upload_img()" /> 
+       <input type="submit" value="View the results" />      
+        
+         {% csrf_token %}
+       </form>    
+       <img src="" id="img_id" style="display:none">
+       <br>
+       
+       </div> 
+
+    <br>    <br>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+   
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function() 
+{
+   
+    $('#textbox1').val($(this).is(':checked'));
+
+    $('#checkbox1').change(function() {
+        if($(this).is(":checked")) {
+            var returnVal = confirm("Are you sure?");
+            $(this).attr("checked", returnVal);
+        }
+        $('#textbox1').val($(this).is(':checked'));        
+    });
+});
+
+
+        function upload_img() {
+          document.getElementById("img_id").style.display = "block"
+          
+          input = document.getElementById("id_docfile")
+
+
+          console.log(input)
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img_id').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
+    
+  </body>
+</html>
